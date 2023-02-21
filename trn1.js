@@ -13,7 +13,11 @@ server.on("error", (err) => {
 server.on("listening", () => console.log("UDP Server listening"));
 
 server.on("message", (message, senderInfo) => {
-  console.log(`${senderInfo.address}:${senderInfo.port} - ${message}`);
+  setTimeout(function () {
+    for (let i = 0; i <= 10; i++) {
+      console.log(`${senderInfo.address}:${senderInfo.port} - ${message}`);
+    }
+  }, 1000);
 });
 
 server.bind(PORT, HOST);
