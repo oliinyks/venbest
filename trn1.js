@@ -1,23 +1,23 @@
+const listNames = require("./names");
+
 const dgram = require("dgram");
 
 const PORT = 49485;
 const HOST = "localhost";
 
-const server = dgram.createSocket("udp4");
+setTimeout(async function () {
+  const client = dgram.createSocket("udp4");
 
-server.on("error", (err) => {
-  console.log(`server error:\n${err.stack}`);
-  server.close();
-});
+  const names = await listNames();
 
-server.on("listening", () => console.log("UDP Server listening"));
+  for (let i = 0; i < names.length; i++) {
+    client.send(`${names[i].name}`, PORT, HOST, (err) => {
+      if (err) {
+        console.log('there is no connection with the script "trni.js"');
+        throw err;
+      }
 
-server.on("message", (message, senderInfo) => {
-  setTimeout(function () {
-    for (let i = 0; i <= 10; i++) {
-      console.log(`${senderInfo.address}:${senderInfo.port} - ${message}`);
-    }
-  }, 1000);
-});
-
-server.bind(PORT, HOST);
+      console.log("UDP message sent");
+    });
+  }
+}, 1000);
