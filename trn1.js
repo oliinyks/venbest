@@ -2,7 +2,7 @@ const listNames = require("./names");
 
 const dgram = require("dgram");
 
-const PORT = 49485;
+const PORT = 2222;
 const HOST = "localhost";
 
 setTimeout(async function () {
