@@ -5,19 +5,21 @@ const dgram = require("dgram");
 const PORT = 2222;
 const HOST = "localhost";
 
-setTimeout(async function () {
-  const client = dgram.createSocket("udp4");
+const client = dgram.createSocket("udp4");
 
+setInterval(async function () {
   const names = await listNames();
 
   for (let i = 0; i < names.length; i++) {
-    client.send(`${names[i].name}`, PORT, HOST, (err) => {
+    const name = `${names[i].name}`;
+    client.send(name, PORT, HOST, (err) => {
       if (err) {
-        console.log('there is no connection with the script "trni.js"');
+        console.log('there is no connection with the script "rcv.js"');
         throw err;
       }
 
-      console.log("UDP message sent");
+      console.log(`UDP message from ${name} sent`);
     });
   }
-}, 1000);
+
+}, 5000);
