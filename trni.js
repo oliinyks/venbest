@@ -22,4 +22,4 @@ setInterval(async function () {
     });
   }
 
-}, 5000);
+}, 1000);
